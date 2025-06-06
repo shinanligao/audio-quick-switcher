@@ -19,6 +19,7 @@ import Meta from "gi://Meta";
 import Shell from "gi://Shell";
 
 import * as Main from "resource:///org/gnome/shell/ui/main.js";
+import { InputSourcePopup } from "resource:///org/gnome/shell/ui/status/keyboard.js";
 import { Extension } from "resource:///org/gnome/shell/extensions/extension.js";
 
 export default class AudioQuickSwitcherExtension extends Extension {
@@ -60,6 +61,47 @@ export default class AudioQuickSwitcherExtension extends Extension {
             this._simpleSwitch();
             return;
         }
+
+        const testDevices = [
+            {
+                shortName: "Dev0",
+                displayName: "Device 0",
+                activate: () => {
+                    console.log("Device 0 activated");
+                },
+            },
+            {
+                shortName: "Dev1",
+                displayName: "Device 1",
+                activate: () => {
+                    console.log("Device 1 activated");
+                },
+            },
+            {
+                shortName: "Dev2",
+                displayName: "Device 2",
+                activate: () => {
+                    console.log("Device 2 activated");
+                },
+            },
+        ];
+
+        this._switcherPopup = new InputSourcePopup(
+            testDevices,
+            this._keybindingAction,
+            this._keybindingActionBackward,
+        );
+        this._switcherPopup.connect("destroy", () => {
+            this._switcherPopup = null;
+        });
+        if (
+            !this._switcherPopup.show(
+                binding.is_reversed(),
+                binding.get_name(),
+                binding.get_mask(),
+            )
+        )
+            this._switcherPopup.fadeAndDestroy();
     }
 
     _simpleSwitch() {
