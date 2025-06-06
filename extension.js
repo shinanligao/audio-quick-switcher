@@ -18,7 +18,11 @@
 import { Extension } from "resource:///org/gnome/shell/extensions/extension.js";
 
 export default class AudioQuickSwitcherExtension extends Extension {
-    enable() {}
+    enable() {
+        console.log("AudioQuickSwitcher Extension enabled");
+    }
 
-    disable() {}
+    disable() {
+        console.log("AudioQuickSwitcher Extension disabled");
+    }
 }
