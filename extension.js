@@ -17,7 +17,7 @@
  */
 import { Extension } from "resource:///org/gnome/shell/extensions/extension.js";
 
-export default class PlainExampleExtension extends Extension {
+export default class AudioQuickSwitcherExtension extends Extension {
     enable() {}
 
     disable() {}
