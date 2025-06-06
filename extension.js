@@ -19,6 +19,7 @@ import Meta from "gi://Meta";
 import Shell from "gi://Shell";
 
 import * as Main from "resource:///org/gnome/shell/ui/main.js";
+import * as PopupMenu from "resource:///org/gnome/shell/ui/popupMenu.js";
 import { InputSourcePopup } from "resource:///org/gnome/shell/ui/status/keyboard.js";
 import { Extension } from "resource:///org/gnome/shell/extensions/extension.js";
 
@@ -65,7 +66,24 @@ export default class AudioQuickSwitcherExtension extends Extension {
             return;
         }
 
-        const devices = Array.from(outputSlider._deviceItems.keys())
+        // Find active device by finding out which one is checked, as this
+        // information does not seem to be stored anywhere in StreamSlider
+        const activeDeviceId = Array.from(
+            outputSlider._deviceItems.entries(),
+        ).find(
+            ([id, item]) => item._ornament === PopupMenu.Ornament.CHECK,
+        )?.[0];
+
+        const allKeys = Array.from(outputSlider._deviceItems.keys());
+
+        const reorderedKeys = activeDeviceId
+            ? [
+                  ...allKeys.slice(allKeys.indexOf(activeDeviceId)),
+                  ...allKeys.slice(0, allKeys.indexOf(activeDeviceId)),
+              ]
+            : allKeys;
+
+        const devices = reorderedKeys
             .map((id) => outputSlider._lookupDevice(id))
             .filter((device) => device !== null)
             .map((device) => ({
