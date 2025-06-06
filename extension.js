@@ -15,14 +15,40 @@
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+import Meta from "gi://Meta";
+import Shell from "gi://Shell";
+
+import * as Main from "resource:///org/gnome/shell/ui/main.js";
 import { Extension } from "resource:///org/gnome/shell/extensions/extension.js";
 
 export default class AudioQuickSwitcherExtension extends Extension {
     enable() {
         console.log("AudioQuickSwitcher Extension enabled");
+
+        this._settings = this.getSettings();
+
+        this._keybindingAction = Main.wm.addKeybinding(
+            "switch-audio-output-device",
+            this._settings,
+            Meta.KeyBindingFlags.NONE,
+            Shell.ActionMode.ALL,
+            this._switchAudioOutputDevice.bind(this),
+        );
+
+        this._keybindingActionBackward = Main.wm.addKeybinding(
+            "switch-audio-output-device-backward",
+            this._settings,
+            Meta.KeyBindingFlags.IS_REVERSED,
+            Shell.ActionMode.ALL,
+            this._switchAudioOutputDevice.bind(this),
+        );
     }
 
     disable() {
         console.log("AudioQuickSwitcher Extension disabled");
+    }
+
+    _switchAudioOutputDevice(display, window, event, binding) {
+        console.log("Switching Audio Output Device");
     }
 }
