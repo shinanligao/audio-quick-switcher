@@ -52,6 +52,9 @@ export default class AudioQuickSwitcherExtension extends Extension {
     _switchAudioOutputDevice(display, window, event, binding) {
         console.log("Switching Audio Output Device");
 
+        let outputSlider =
+            Main.panel.statusArea.quickSettings._volumeOutput._output;
+
         // HACK: Fall back on simple audio output switching since we
         // can't show a popup switcher while a GrabHelper grab is in
         // effect without considerable work to consolidate the usage
@@ -62,32 +65,19 @@ export default class AudioQuickSwitcherExtension extends Extension {
             return;
         }
 
-        const testDevices = [
-            {
-                shortName: "Dev0",
-                displayName: "Device 0",
+        const devices = Array.from(outputSlider._deviceItems.keys())
+            .map((id) => outputSlider._lookupDevice(id))
+            .filter((device) => device !== null)
+            .map((device) => ({
+                shortName: device.description.substring(0, 2),
+                displayName: device.description,
                 activate: () => {
-                    console.log("Device 0 activated");
+                    outputSlider._activateDevice(device);
                 },
-            },
-            {
-                shortName: "Dev1",
-                displayName: "Device 1",
-                activate: () => {
-                    console.log("Device 1 activated");
-                },
-            },
-            {
-                shortName: "Dev2",
-                displayName: "Device 2",
-                activate: () => {
-                    console.log("Device 2 activated");
-                },
-            },
-        ];
+            }));
 
         this._switcherPopup = new InputSourcePopup(
-            testDevices,
+            devices,
             this._keybindingAction,
             this._keybindingActionBackward,
         );
