@@ -50,5 +50,20 @@ export default class AudioQuickSwitcherExtension extends Extension {
 
     _switchAudioOutputDevice(display, window, event, binding) {
         console.log("Switching Audio Output Device");
+
+        // HACK: Fall back on simple audio output switching since we
+        // can't show a popup switcher while a GrabHelper grab is in
+        // effect without considerable work to consolidate the usage
+        // of pushModal/popModal and grabHelper. See
+        // https://bugzilla.gnome.org/show_bug.cgi?id=695143 .
+        if (Main.actionMode === Shell.ActionMode.POPUP) {
+            this._simpleSwitch();
+            return;
+        }
+    }
+
+    _simpleSwitch() {
+        // TO DO
+        console.log("Simple switch: not implemented");
     }
 }
