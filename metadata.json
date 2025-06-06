@@ -4,5 +4,6 @@
   "uuid": "audio-quick-switcher@shinan.ligao.proton.me",
   "shell-version": [
     "48"
-  ]
+  ],
+  "settings-schema": "org.gnome.shell.extensions.audio-quick-switcher"
 }

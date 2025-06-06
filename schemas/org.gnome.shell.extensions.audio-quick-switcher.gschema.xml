@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.audio-quick-switcher" path="/org/gnome/shell/extensions/audio-quick-switcher/">
+    <key name="switch-audio-output-device" type="as">
+      <default><![CDATA[['<Alt>o']]]></default>
+      <summary>Switch audio output device</summary>
+      <description>Keyboard shortcut to switch the audio output device</description>
+    </key>
+
+    <key name="switch-audio-output-device-backward" type="as">
+      <default><![CDATA[['<Shift><Alt>o']]]></default>
+      <summary>Switch audio output device backward</summary>
+      <description>Keyboard shortcut to switch to the previous audio output device</description>
+    </key>
+  </schema>
+</schemalist>
