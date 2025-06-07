@@ -47,6 +47,14 @@ export default class AudioQuickSwitcherExtension extends Extension {
     }
 
     disable() {
+        Main.wm.removeKeybinding("switch-audio-output-device");
+        Main.wm.removeKeybinding("switch-audio-output-device-backward");
+
+        if (this._switcherPopup) {
+            this._switcherPopup.destroy();
+            this._switcherPopup = null;
+        }
+
         console.log("AudioQuickSwitcher Extension disabled");
     }
 
