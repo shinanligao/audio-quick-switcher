@@ -18,6 +18,7 @@
 import Clutter from "gi://Clutter";
 import GObject from "gi://GObject";
 import Meta from "gi://Meta";
+import Pango from "gi://Pango";
 import Shell from "gi://Shell";
 import St from "gi://St";
 
@@ -82,6 +83,9 @@ const AudioDeviceSwitcher = GObject.registerClass(
                 text: item.displayName,
                 x_align: Clutter.ActorAlign.CENTER,
             });
+            text.clutter_text.set_line_wrap(true);
+            text.clutter_text.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
+
             box.add_child(text);
 
             this.addItem(box, text);
