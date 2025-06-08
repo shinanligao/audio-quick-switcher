@@ -26,15 +26,15 @@ import * as PopupMenu from "resource:///org/gnome/shell/ui/popupMenu.js";
 import * as SwitcherPopup from "resource:///org/gnome/shell/ui/switcherPopup.js";
 import { Extension } from "resource:///org/gnome/shell/extensions/extension.js";
 
-const InputSourcePopup = GObject.registerClass(
-    class InputSourcePopup extends SwitcherPopup.SwitcherPopup {
+const AudioDevicePopup = GObject.registerClass(
+    class AudioDevicePopup extends SwitcherPopup.SwitcherPopup {
         _init(items, action, actionBackward) {
             super._init(items);
 
             this._action = action;
             this._actionBackward = actionBackward;
 
-            this._switcherList = new InputSourceSwitcher(this._items);
+            this._switcherList = new AudioDeviceSwitcher(this._items);
         }
 
         _keyPressHandler(keysym, action) {
@@ -57,8 +57,8 @@ const InputSourcePopup = GObject.registerClass(
     },
 );
 
-const InputSourceSwitcher = GObject.registerClass(
-    class InputSourceSwitcher extends SwitcherPopup.SwitcherList {
+const AudioDeviceSwitcher = GObject.registerClass(
+    class AudioDeviceSwitcher extends SwitcherPopup.SwitcherList {
         _init(items) {
             super._init(true);
 
@@ -168,7 +168,7 @@ export default class AudioQuickSwitcherExtension extends Extension {
                 },
             }));
 
-        this._switcherPopup = new InputSourcePopup(
+        this._switcherPopup = new AudioDevicePopup(
             devices,
             this._keybindingAction,
             this._keybindingActionBackward,
