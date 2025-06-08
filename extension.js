@@ -15,13 +15,81 @@
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+import Clutter from "gi://Clutter";
+import GObject from "gi://GObject";
 import Meta from "gi://Meta";
 import Shell from "gi://Shell";
+import St from "gi://St";
 
 import * as Main from "resource:///org/gnome/shell/ui/main.js";
 import * as PopupMenu from "resource:///org/gnome/shell/ui/popupMenu.js";
-import { InputSourcePopup } from "resource:///org/gnome/shell/ui/status/keyboard.js";
+import * as SwitcherPopup from "resource:///org/gnome/shell/ui/switcherPopup.js";
 import { Extension } from "resource:///org/gnome/shell/extensions/extension.js";
+
+const InputSourcePopup = GObject.registerClass(
+    class InputSourcePopup extends SwitcherPopup.SwitcherPopup {
+        _init(items, action, actionBackward) {
+            super._init(items);
+
+            this._action = action;
+            this._actionBackward = actionBackward;
+
+            this._switcherList = new InputSourceSwitcher(this._items);
+        }
+
+        _keyPressHandler(keysym, action) {
+            if (action === this._action) this._select(this._next());
+            else if (action === this._actionBackward)
+                this._select(this._previous());
+            else if (keysym === Clutter.KEY_Left)
+                this._select(this._previous());
+            else if (keysym === Clutter.KEY_Right) this._select(this._next());
+            else return Clutter.EVENT_PROPAGATE;
+
+            return Clutter.EVENT_STOP;
+        }
+
+        _finish() {
+            super._finish();
+
+            this._items[this._selectedIndex].activate(true);
+        }
+    },
+);
+
+const InputSourceSwitcher = GObject.registerClass(
+    class InputSourceSwitcher extends SwitcherPopup.SwitcherList {
+        _init(items) {
+            super._init(true);
+
+            for (let i = 0; i < items.length; i++) this._addIcon(items[i]);
+        }
+
+        _addIcon(item) {
+            const box = new St.BoxLayout({
+                orientation: Clutter.Orientation.VERTICAL,
+            });
+
+            const symbol = new St.Bin({
+                style_class: "input-source-switcher-symbol",
+                child: new St.Label({
+                    text: item.shortName, // THIS IS WHERE I CAN RENDER THE ICON INSTEAD!
+                    x_align: Clutter.ActorAlign.CENTER,
+                    y_align: Clutter.ActorAlign.CENTER,
+                }),
+            });
+            box.add_child(symbol);
+
+            let text = new St.Label({
+                text: item.displayName,
+                x_align: Clutter.ActorAlign.CENTER,
+            });
+            box.add_child(text);
+
+            this.addItem(box, text);
+        }
+    },
+);
 
 export default class AudioQuickSwitcherExtension extends Extension {
     enable() {
