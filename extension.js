@@ -78,9 +78,7 @@ export default class AudioQuickSwitcherExtension extends Extension {
         // information does not seem to be stored anywhere in StreamSlider
         const activeDeviceId = Array.from(
             outputSlider._deviceItems.entries(),
-        ).find(
-            ([id, item]) => item._ornament === PopupMenu.Ornament.CHECK,
-        )?.[0];
+        ).find(([, item]) => item._ornament === PopupMenu.Ornament.CHECK)?.[0];
 
         const allKeys = Array.from(outputSlider._deviceItems.keys());
 
