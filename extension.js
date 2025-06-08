@@ -71,7 +71,7 @@ const AudioDeviceSwitcher = GObject.registerClass(
             });
 
             let icon = new St.Icon({
-                style_class: "input-source-switcher-symbol",
+                style_class: "audio-device-switcher-icon",
                 x_align: Clutter.ActorAlign.CENTER,
             });
             icon.gicon = item.icon;
