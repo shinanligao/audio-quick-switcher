@@ -83,6 +83,7 @@ const AudioDeviceSwitcher = GObject.registerClass(
                 text: item.displayName,
                 x_align: Clutter.ActorAlign.CENTER,
             });
+            text.height = text.height * 2;
             text.clutter_text.set_line_wrap(true);
             text.clutter_text.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
 
