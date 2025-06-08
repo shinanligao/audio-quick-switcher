@@ -70,15 +70,13 @@ const AudioDeviceSwitcher = GObject.registerClass(
                 orientation: Clutter.Orientation.VERTICAL,
             });
 
-            const symbol = new St.Bin({
+            let icon = new St.Icon({
                 style_class: "input-source-switcher-symbol",
-                child: new St.Label({
-                    text: item.shortName, // THIS IS WHERE I CAN RENDER THE ICON INSTEAD!
-                    x_align: Clutter.ActorAlign.CENTER,
-                    y_align: Clutter.ActorAlign.CENTER,
-                }),
+                x_align: Clutter.ActorAlign.CENTER,
             });
-            box.add_child(symbol);
+            icon.gicon = item.icon;
+
+            box.add_child(icon);
 
             let text = new St.Label({
                 text: item.displayName,
@@ -161,6 +159,7 @@ export default class AudioQuickSwitcherExtension extends Extension {
             .map((id) => outputSlider._lookupDevice(id))
             .filter((device) => device !== null)
             .map((device) => ({
+                icon: device.get_gicon(),
                 shortName: device.description.substring(0, 2),
                 displayName: device.description,
                 activate: () => {
