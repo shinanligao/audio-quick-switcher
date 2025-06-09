@@ -163,13 +163,19 @@ export default class AudioQuickSwitcherExtension extends Extension {
         const devices = reorderedKeys
             .map((id) => outputSlider._lookupDevice(id))
             .filter((device) => device !== null)
-            .map((device) => ({
-                icon: device.get_gicon(),
-                name: device.description,
-                activate: () => {
-                    outputSlider._activateDevice(device);
-                },
-            }));
+            .map((device) => {
+                const { description, origin } = device;
+                const name = origin
+                    ? `${description} – ${origin}`
+                    : description;
+                return {
+                    icon: device.get_gicon(),
+                    name: name,
+                    activate: () => {
+                        outputSlider._activateDevice(device);
+                    },
+                };
+            });
 
         this._switcherPopup = new AudioDevicePopup(
             devices,
