@@ -80,7 +80,7 @@ const AudioDeviceSwitcher = GObject.registerClass(
             box.add_child(icon);
 
             let text = new St.Label({
-                text: item.displayName,
+                text: item.name,
                 x_align: Clutter.ActorAlign.CENTER,
             });
             text.height = text.height * 2;
@@ -165,8 +165,7 @@ export default class AudioQuickSwitcherExtension extends Extension {
             .filter((device) => device !== null)
             .map((device) => ({
                 icon: device.get_gicon(),
-                shortName: device.description.substring(0, 2),
-                displayName: device.description,
+                name: device.description,
                 activate: () => {
                     outputSlider._activateDevice(device);
                 },
