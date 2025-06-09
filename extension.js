@@ -135,16 +135,6 @@ export default class AudioQuickSwitcherExtension extends Extension {
         let outputSlider =
             Main.panel.statusArea.quickSettings._volumeOutput._output;
 
-        // HACK: Fall back on simple audio output switching since we
-        // can't show a popup switcher while a GrabHelper grab is in
-        // effect without considerable work to consolidate the usage
-        // of pushModal/popModal and grabHelper. See
-        // https://bugzilla.gnome.org/show_bug.cgi?id=695143 .
-        if (Main.actionMode === Shell.ActionMode.POPUP) {
-            this._simpleSwitch();
-            return;
-        }
-
         // Find active device by finding out which one is checked, as this
         // information does not seem to be stored anywhere in StreamSlider
         const activeDeviceId = Array.from(
@@ -193,10 +183,5 @@ export default class AudioQuickSwitcherExtension extends Extension {
             )
         )
             this._switcherPopup.fadeAndDestroy();
-    }
-
-    _simpleSwitch() {
-        // TO DO
-        console.log("Simple switch: not implemented");
     }
 }
