@@ -24,6 +24,12 @@ export default class AudioQuickSwitcherPreferences extends ExtensionPreferences 
             _("Switch to next audio output device"),
             "switch-audio-output-device",
         );
+
+        this._addShortcutRow(
+            group,
+            _("Switch to previous audio output device"),
+            "switch-audio-output-device-backward",
+        );
     }
 
     _addShortcutRow(group, title, settingsKey) {
