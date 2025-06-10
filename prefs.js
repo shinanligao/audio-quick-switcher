@@ -1,5 +1,7 @@
 import Adw from "gi://Adw";
+import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
+import GLib from "gi://GLib";
 
 import {
     ExtensionPreferences,
@@ -65,6 +67,36 @@ export default class AudioQuickSwitcherPreferences extends ExtensionPreferences 
             transient_for: this.window,
             default_width: 400,
         });
+
+        const contentArea = dialog.get_content_area();
+        contentArea.margin_start = 12;
+        contentArea.margin_end = 12;
+        contentArea.margin_top = 12;
+        contentArea.margin_bottom = 12;
+        contentArea.spacing = 12;
+
+        const svgPath = GLib.build_filenamev([
+            this.path,
+            "icons",
+            "enter-keyboard-shortcut.svg",
+        ]);
+        const file = Gio.File.new_for_path(svgPath);
+
+        const picture = new Gtk.Picture({
+            file: file,
+            can_shrink: false,
+            halign: Gtk.Align.CENTER,
+            valign: Gtk.Align.CENTER,
+        });
+
+        contentArea.append(picture);
+
+        const label = new Gtk.Label({
+            label: _("Press a key combination to set as shortcut"),
+            wrap: true,
+            halign: Gtk.Align.CENTER,
+        });
+        contentArea.append(label);
 
         dialog.add_button(_("Cancel"), Gtk.ResponseType.CANCEL);
         dialog.connect("response", (dlg, _response) => {
