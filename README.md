@@ -2,6 +2,8 @@
 
 A GNOME Shell extension providing a popup for quick audio output device switching.
 
+![Extension Demo](assets/demo.gif)
+
 ## Description
 
 This extension provides a keyboard shortcut to quickly open a popup that allows you to switch between available audio output devices without having to navigate through the system or quick settings.
