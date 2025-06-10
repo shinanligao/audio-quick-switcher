@@ -8,10 +8,7 @@ import {
 
 export default class AudioQuickSwitcherPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
-        const page = new Adw.PreferencesPage({
-            title: _("General"),
-            icon_name: "dialog-information-symbolic",
-        });
+        const page = new Adw.PreferencesPage();
         window.add(page);
 
         const group = new Adw.PreferencesGroup({
