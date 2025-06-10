@@ -19,9 +19,9 @@ This extension provides a keyboard shortcut to quickly open a popup that allows 
 git clone https://github.com/shinanligao/audio-quick-switcher ~/.local/share/gnome-shell/extensions/audio-quick-switcher@shinan.ligao.proton.me
 ```
 
-2. Compile the GSettings Schema
+2. Compile the GSettings Schema:
 ```bash
-glib-compile-schemas ~/.local/share/gnome-shell/extensions/audio-quick-switcher@shinan.ligao.proton.me/schemas
+glib-compile-schemas ~/.local/share/gnome-shell/extensions/audio-quick-switcher@shinan.ligao.proton.me/schemas/
 ```
 
 3. Restart GNOME Shell, e.g. by logging out and logging back in
