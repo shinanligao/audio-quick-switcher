@@ -8,6 +8,8 @@ import {
 
 export default class AudioQuickSwitcherPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
+        this.window = window;
+
         const page = new Adw.PreferencesPage();
         window.add(page);
 
