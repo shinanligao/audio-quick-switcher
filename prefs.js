@@ -1,4 +1,5 @@
 import Adw from "gi://Adw";
+import Gdk from "gi://Gdk";
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
 import GLib from "gi://GLib";
@@ -55,11 +56,11 @@ export default class AudioQuickSwitcherPreferences extends ExtensionPreferences 
         shortcutRow.add_suffix(editButton);
 
         editButton.connect("clicked", () => {
-            this._captureKeypress();
+            this._captureKeypress(settings, settingsKey);
         });
     }
 
-    _captureKeypress() {
+    _captureKeypress(settings, settingsKey) {
         const dialog = new Gtk.Dialog({
             title: _("Set Shortcut"),
             use_header_bar: 1,
@@ -97,6 +98,33 @@ export default class AudioQuickSwitcherPreferences extends ExtensionPreferences 
             halign: Gtk.Align.CENTER,
         });
         contentArea.append(label);
+
+        const keyController = new Gtk.EventControllerKey();
+        dialog.add_controller(keyController);
+
+        keyController.connect(
+            "key-pressed",
+            (_controller, keyval, _keycode, state) => {
+                if (keyval === Gdk.KEY_Escape) {
+                    dialog.response(Gtk.ResponseType.CANCEL);
+                    return Gdk.EVENT_STOP;
+                }
+
+                const mask = state & Gtk.accelerator_get_default_mod_mask();
+
+                if (mask === 0) {
+                    return Gdk.EVENT_STOP;
+                }
+
+                if (Gtk.accelerator_valid(keyval, mask)) {
+                    const accelerator = Gtk.accelerator_name(keyval, mask);
+                    settings.set_strv(settingsKey, [accelerator]);
+                    dialog.destroy();
+                }
+
+                return Gdk.EVENT_STOP;
+            },
+        );
 
         dialog.add_button(_("Cancel"), Gtk.ResponseType.CANCEL);
         dialog.connect("response", (dlg, _response) => {
