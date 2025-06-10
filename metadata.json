@@ -1,6 +1,6 @@
 {
   "name": "Audio Quick Switcher",
-  "description": "Show a popup to quickly switch audio outputs",
+  "description": "Shows a popup to quickly switch audio outputs.",
   "uuid": "audio-quick-switcher@shinan.ligao.proton.me",
   "shell-version": [
     "48"
