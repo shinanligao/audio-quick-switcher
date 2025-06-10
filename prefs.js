@@ -42,5 +42,16 @@ export default class AudioQuickSwitcherPreferences extends ExtensionPreferences 
             valign: Gtk.Align.CENTER,
         });
         shortcutRow.add_suffix(shortcutLabel);
+
+        const editButton = new Gtk.Button({
+            icon_name: "edit-symbolic",
+            valign: Gtk.Align.CENTER,
+            tooltip_text: _("Edit shortcut"),
+        });
+        shortcutRow.add_suffix(editButton);
+
+        editButton.connect("clicked", () => {
+            console.log("Edit button clicked");
+        });
     }
 }
