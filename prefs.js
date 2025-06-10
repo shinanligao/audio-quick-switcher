@@ -12,7 +12,7 @@ export default class AudioQuickSwitcherPreferences extends ExtensionPreferences 
         window.add(page);
 
         const shortcutsGroup = new Adw.PreferencesGroup({
-            title: _("Shortcuts"),
+            title: _("Keyboard Shortcuts"),
         });
         page.add(shortcutsGroup);
 
