@@ -11,19 +11,19 @@ export default class AudioQuickSwitcherPreferences extends ExtensionPreferences 
         const page = new Adw.PreferencesPage();
         window.add(page);
 
-        const group = new Adw.PreferencesGroup({
+        const shortcutsGroup = new Adw.PreferencesGroup({
             title: _("Shortcuts"),
         });
-        page.add(group);
+        page.add(shortcutsGroup);
 
         this._addShortcutRow(
-            group,
+            shortcutsGroup,
             _("Switch to next audio output device"),
             "switch-audio-output-device",
         );
 
         this._addShortcutRow(
-            group,
+            shortcutsGroup,
             _("Switch to previous audio output device"),
             "switch-audio-output-device-backward",
         );
