@@ -53,7 +53,24 @@ export default class AudioQuickSwitcherPreferences extends ExtensionPreferences 
         shortcutRow.add_suffix(editButton);
 
         editButton.connect("clicked", () => {
-            console.log("Edit button clicked");
+            this._captureKeypress();
         });
+    }
+
+    _captureKeypress() {
+        const dialog = new Gtk.Dialog({
+            title: _("Set Shortcut"),
+            use_header_bar: 1,
+            modal: true,
+            transient_for: this.window,
+            default_width: 400,
+        });
+
+        dialog.add_button(_("Cancel"), Gtk.ResponseType.CANCEL);
+        dialog.connect("response", (dlg, _response) => {
+            dlg.destroy();
+        });
+
+        dialog.present();
     }
 }
