@@ -58,6 +58,11 @@ export default class AudioQuickSwitcherPreferences extends ExtensionPreferences 
         editButton.connect("clicked", () => {
             this._captureKeypress(settings, settingsKey);
         });
+
+        settings.connect(`changed::${settingsKey}`, () => {
+            const accelerator = settings.get_strv(settingsKey)[0] || "";
+            shortcutLabel.set_accelerator(accelerator);
+        });
     }
 
     _captureKeypress(settings, settingsKey) {
