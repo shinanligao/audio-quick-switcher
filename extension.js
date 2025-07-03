@@ -124,8 +124,10 @@ export default class AudioQuickSwitcherExtension extends Extension {
         console.log("AudioQuickSwitcher Extension disabled");
     }
 
-    _switchAudioOutputDevice(display, window, event, binding) {
+    _switchAudioOutputDevice(display, window, bindingOrEvent, maybeBinding) {
         console.log("Switching Audio Output Device");
+
+        const binding = maybeBinding ?? bindingOrEvent;
 
         let outputSlider =
             Main.panel.statusArea.quickSettings._volumeOutput._output;
