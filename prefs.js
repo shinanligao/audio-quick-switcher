@@ -49,7 +49,7 @@ export default class AudioQuickSwitcherPreferences extends ExtensionPreferences 
         shortcutRow.add_suffix(shortcutLabel);
 
         const editButton = new Gtk.Button({
-            icon_name: "edit-symbolic",
+            icon_name: "document-edit-symbolic",
             valign: Gtk.Align.CENTER,
             tooltip_text: _("Edit shortcut"),
         });
