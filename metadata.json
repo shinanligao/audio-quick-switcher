@@ -3,7 +3,7 @@
   "description": "Shows a popup to quickly switch audio outputs.",
   "uuid": "audio-quick-switcher@shinan.ligao.proton.me",
   "shell-version": [
-    "48"
+    "47", "48"
   ],
   "settings-schema": "org.gnome.shell.extensions.audio-quick-switcher",
   "url": "https://github.com/shinanligao/audio-quick-switcher"

@@ -9,6 +9,7 @@ import * as Main from "resource:///org/gnome/shell/ui/main.js";
 import * as PopupMenu from "resource:///org/gnome/shell/ui/popupMenu.js";
 import * as SwitcherPopup from "resource:///org/gnome/shell/ui/switcherPopup.js";
 import { Extension } from "resource:///org/gnome/shell/extensions/extension.js";
+import * as Config from "resource:///org/gnome/shell/misc/config.js";
 
 const AudioDevicePopup = GObject.registerClass(
     class AudioDevicePopup extends SwitcherPopup.SwitcherPopup {
@@ -50,9 +51,20 @@ const AudioDeviceSwitcher = GObject.registerClass(
         }
 
         _addIcon(item) {
-            const box = new St.BoxLayout({
-                orientation: Clutter.Orientation.VERTICAL,
-            });
+            const [major, minor] = Config.PACKAGE_VERSION.split(".").map((s) =>
+                Number(s),
+            );
+
+            let box;
+            if (major >= 48) {
+                box = new St.BoxLayout({
+                    orientation: Clutter.Orientation.VERTICAL,
+                });
+            } else {
+                box = new St.BoxLayout({
+                    vertical: true,
+                });
+            }
 
             let icon = new St.Icon({
                 style_class: "audio-device-switcher-icon",
